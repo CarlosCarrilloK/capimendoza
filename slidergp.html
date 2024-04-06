@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slider de Imágenes</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    .slider-container {
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+    .slider {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+    .slide {
+      min-width: 100%;
+      overflow: hidden;
+    }
+    .slide img {
+      width: 100%;
+      height: auto;
+    }
+    .prev, .next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 10px;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      z-index: 2;
+    }
+    .prev {
+      left: 0;
+    }
+    .next {
+      right: 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="slider-container">
+  <div class="slider">
+    <div class="slide"><img src="image/1.jpg" alt="Imagen 1"></div>
+    <div class="slide"><img src="image/2.jpg" alt="Imagen 2"></div>
+    <div class="slide"><img src="image/3.jpg" alt="Imagen 3"></div>
+    <div class="slide"><img src="image/4.jpg" alt="Imagen 4"></div>
+    <div class="slide"><img src="image/5.jpg" alt="Imagen 5"></div>
+  </div>
+  <div class="prev" onclick="moveSlide(-1)">&#10094;</div>
+  <div class="next" onclick="moveSlide(1)">&#10095;</div>
+</div>
+
+<script>
+  let slideIndex = 0;
+
+  function showSlides() {
+    let slides = document.querySelectorAll('.slide');
+    if (slideIndex >= slides.length) {
+      slideIndex = 0;
+    } else if (slideIndex < 0) {
+      slideIndex = slides.length - 1;
+    }
+    for (let i = 0; i < slides.length; i++) {
+      slides[i].style.transform = `translateX(${-slideIndex * 100}%)`;
+    }
+  }
+
+  function moveSlide(n) {
+    slideIndex += n;
+    showSlides();
+  }
+
+  // Auto slide
+  setInterval(() => {
+    moveSlide(1);
+  }, 3000);
+
+  // Responsive
+  window.addEventListener('resize', showSlides);
+  window.addEventListener('DOMContentLoaded', showSlides);
+</script>
+
+</body>
+</html>
